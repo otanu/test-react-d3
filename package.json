@@ -17,7 +17,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -29,6 +31,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@types/d3": "^5.7.1"
-  }
+    "@types/d3": "^5.7.1",
+    "gh-pages": "^2.0.1"
+  },
+  "homepage": "https://otanu.github.io/test-react-d3"
 }
