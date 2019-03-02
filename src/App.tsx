@@ -217,12 +217,14 @@ class App extends Component {
         <h1 ref={this.h1Refs["#zoom"]}>React+D3 Zoom/Pan</h1>
         <SVGZoom width={600} height={400} />
         <h1 ref={this.h1Refs["#force"]}>React+D3 ForceSimulation</h1>
+        <p>クリックでボール追加。ドラッグ・ズーム可能。</p>
         <SVGForceSimulation
           width={600}
           height={400}
           nodes={[{ id: 1, name: "1", val: 30 }, { id: 2, name: "2", val: 40 }]}
         />
         <h1 ref={this.h1Refs["#tree"]}>React+D3 ツリー</h1>
+        <p>クリックで開閉</p>
         <SVGTree
           width={600}
           height={400}

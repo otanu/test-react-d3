@@ -1,3 +1,16 @@
 .svg-root {
-  background-color: #ccc
+  background-color: #ccc;
+}
+
+.App {
+  margin: 10px;
+}
+
+.App h1 {
+  border-bottom: solid 3px black;
+  margin-bottom: 10px;
+}
+
+.App p {
+  margin: 5px;
 }
