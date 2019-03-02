@@ -3,10 +3,14 @@ import React, {
   useRef,
   useState,
   useCallback,
-  useEffect
+  useEffect,
+  createRef
 } from "react";
 import "./App.css";
 import * as d3 from "d3";
+import SVGZoom from "./components/SVGZoom";
+import SVGForceSimulation from "./components/SVGForceSimulation";
+import SVGTree from "./components/SVGTree";
 
 const SVGPure = () => {
   return (
@@ -47,6 +51,7 @@ const SVGD3 = () => {
   }, []);
   return <svg ref={svgRef} className="svg-root" width="200" height="100" />;
 };
+
 const SVGD3Click = () => {
   const svgRef = useRef(null);
   useEffect(() => {
@@ -165,25 +170,87 @@ const SVGD3ClickTransitionReact2 = () => {
   );
 };
 
-
 class App extends Component {
+  h1Refs: { [key: string]: any } = {
+    "#pure-click": createRef<HTMLHeadingElement>(),
+    "#d3": createRef<HTMLHeadingElement>(),
+    "#react-d3-click": createRef<HTMLHeadingElement>(),
+    "#react-d3-tr": createRef<HTMLHeadingElement>(),
+    "#react-tr": createRef<HTMLHeadingElement>(),
+    "#react-tr2": createRef<HTMLHeadingElement>(),
+    "#zoom": createRef<HTMLHeadingElement>(),
+    "#force": createRef<HTMLHeadingElement>(),
+    "#tree": createRef<HTMLHeadingElement>()
+  };
+
+  componentDidMount() {
+    const ref = this.h1Refs[location.hash];
+    if (!ref) return;
+
+    setTimeout(() => {
+      ref.current!.scrollIntoView({
+        block: "start",
+        behavior: "smooth"
+      });
+    }, 250);
+  }
+
   render() {
     return (
       <div className="App">
         <h1>D3なし</h1>
         <SVGPure />
-        <h1>D3なし+クリック</h1>
+        <h1 ref={this.h1Refs["#pure-click"]}>D3なし+クリック</h1>
         <SVGPureClick />
-        <h1>D3</h1>
+        <h1 ref={this.h1Refs["#d3"]}>D3</h1>
         <SVGD3 />
-        <h1>D3+クリック</h1>
+        <h1 ref={this.h1Refs["#react-d3-click"]}>D3+クリック</h1>
         <SVGD3Click />
-        <h1>D3+クリック+トランジション</h1>
+        <h1 ref={this.h1Refs["#react-d3-tr"]}>D3+クリック+トランジション</h1>
         <SVGD3ClickTransition />
-        <h1>React+トランジション(D3)</h1>
+        <h1 ref={this.h1Refs["#react-tr"]}>React+トランジション(D3)</h1>
         <SVGD3ClickTransitionReact />
-        <h1>React+トランジション(D3)+完了イベント追加</h1>
+        <h1 ref={this.h1Refs["#react-tr2"]}>
+          React+トランジション(D3)+完了イベント追加
+        </h1>
         <SVGD3ClickTransitionReact2 />
+        <h1 ref={this.h1Refs["#zoom"]}>React+D3 Zoom/Pan</h1>
+        <SVGZoom width={600} height={400} />
+        <h1 ref={this.h1Refs["#force"]}>React+D3 ForceSimulation</h1>
+        <SVGForceSimulation
+          width={600}
+          height={400}
+          nodes={[{ id: 1, name: "1", val: 30 }, { id: 2, name: "2", val: 40 }]}
+        />
+        <h1 ref={this.h1Refs["#tree"]}>React+D3 ツリー</h1>
+        <SVGTree
+          width={600}
+          height={400}
+          data={{
+            name: "A",
+            children: [
+              { name: "B" },
+              {
+                name: "C",
+                children: [{ name: "D" }, { name: "E" }]
+              },
+              { name: "F" },
+              {
+                name: "G",
+                children: [{ name: "H" }]
+              },
+              {
+                name: "I",
+                children: [
+                  {
+                    name: "J",
+                    children: [{ name: "K" }, { name: "L" }, { name: "M" }]
+                  }
+                ]
+              }
+            ]
+          }}
+        />
       </div>
     );
   }

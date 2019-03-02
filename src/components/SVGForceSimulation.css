@@ -1,0 +1,7 @@
+.node circle {
+  fill: blue;
+  border: black;
+  stroke: black; 
+  stroke-width: 0.5px;
+  opacity: 0.6;
+}
